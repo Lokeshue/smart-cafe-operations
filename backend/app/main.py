@@ -12,11 +12,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import init_db
 from app.routers import analytics, drinks, orders
 
-# Configure logging for important actions
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
+
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
@@ -25,10 +25,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Allow frontend dev server
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://smart-cafe-operations.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -52,6 +55,7 @@ def root():
         "message": "Smart Café Operations & Nutrition Tracker API",
         "docs": "/docs",
         "health": "/health",
+        "api_prefix": "/api",
     }
 
 
